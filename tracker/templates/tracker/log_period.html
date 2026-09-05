@@ -1,0 +1,333 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Hedhi</title>
+
+    <link rel="stylesheet" href="{% static 'tracker/css/style.css' %}">
+
+</head>
+
+<body>
+    {% include "tracker/navbar.html" %}
+    <div class="page-wrapper">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    🌸 Hello, {{ request.user.username }}
+                </h1>
+
+                <p>
+                    Here's your personal cycle overview.
+                </p>
+
+            </div>
+
+
+            <nav class="dashboard-nav">
+
+                <a href="{% url 'profile' %}">
+                    Profile
+                </a>
+
+                <a href="{% url 'history' %}">
+                    History
+                </a>
+
+                <form method="POST" action="{% url 'logout' %}">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="logout-button">
+                        Logout
+                    </button>
+
+                </form>
+
+            </nav>
+
+        </header>
+
+
+        {% if messages %}
+
+        {% for message in messages %}
+
+        <div class="success-message">
+            {{ message }}
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+
+
+        <div class="dashboard-actions">
+
+            <a href="{% url 'predict' %}" class="primary-btn">
+                ✨ Predict Cycle
+            </a>
+
+            <a href="{% url 'log_period' %}" class="secondary-btn">
+                🩸 Log Period
+            </a>
+
+            <a href="{% url 'symptoms' %}" class="secondary-btn">
+                📝 Log Symptoms
+            </a>
+
+        </div>
+
+
+        <section class="dashboard-summary">
+
+
+            <div class="summary-card">
+
+                <span>🩸</span>
+
+                <p>Cycle Day</p>
+
+                <h2>
+                    {% if current_cycle_day %}
+                    {{ current_cycle_day }}
+                    {% else %}
+                    --
+                    {% endif %}
+                </h2>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>🌸</span>
+
+                <p>Next Period</p>
+
+                <h2>
+                    {% if next_period %}
+                    {{ next_period|date:"d M" }}
+                    {% else %}
+                    --
+                    {% endif %}
+                </h2>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>⏳</span>
+
+                <p>Days Remaining</p>
+
+                <h2>
+                    {% if days_until_next != None %}
+                    {{ days_until_next }}
+                    {% else %}
+                    --
+                    {% endif %}
+                </h2>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>🌼</span>
+
+                <p>Ovulation Estimate</p>
+
+                <h2>
+                    {% if ovulation_date %}
+                    {{ ovulation_date|date:"d M" }}
+                    {% else %}
+                    --
+                    {% endif %}
+                </h2>
+
+            </div>
+
+
+        </section>
+
+
+        {% if not latest_cycle %}
+
+        <div class="empty-cycle">
+
+            <h2>🌷 Start your cycle journey</h2>
+
+            <p>
+                You haven't recorded a cycle yet.
+                Make your first prediction or log
+                your latest period.
+            </p>
+
+            <a href="{% url 'predict' %}" class="primary-btn">
+                Add Cycle Information
+            </a>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- CALENDAR -->
+
+        <section class="calendar-card">
+
+            <div class="calendar-header">
+
+                <div>
+
+                    <span>YOUR CALENDAR</span>
+
+                    <h2>
+                        {{ calendar_month }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="calendar-weekdays">
+
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+                <div>Sun</div>
+
+            </div>
+
+
+            <div class="calendar-body">
+
+                {% for week in calendar_weeks %}
+
+                {% for day in week %}
+
+                <div class="
+                            calendar-day
+                            {% if not day.current_month %}
+                                outside-month
+                            {% endif %}
+
+                            {% if day.type %}
+                                {{ day.type }}
+                            {% endif %}
+                        ">
+
+                    {{ day.number }}
+
+                </div>
+
+                {% endfor %}
+
+                {% endfor %}
+
+            </div>
+
+
+            <div class="calendar-legend">
+
+                <span>
+                    <i class="legend-period"></i>
+                    Period
+                </span>
+
+                <span>
+                    <i class="legend-predicted"></i>
+                    Predicted
+                </span>
+
+                <span>
+                    <i class="legend-fertile"></i>
+                    Fertile estimate
+                </span>
+
+                <span>
+                    <i class="legend-ovulation"></i>
+                    Ovulation estimate
+                </span>
+
+                <span>
+                    <i class="legend-today"></i>
+                    Today
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADVICE -->
+
+        <section class="advice-section">
+
+            <div class="section-heading">
+
+                <span class="icon-circle">
+                    💗
+                </span>
+
+                <div>
+
+                    <h2>Your Guidance</h2>
+
+                    <p>
+                        Based on information you've logged.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% for item in advice %}
+
+            <div class="advice-item">
+
+                <span>🌷</span>
+
+                <p>
+                    {{ item }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+
+            <div class="notice">
+
+                Guidance is general wellness information,
+                not a medical diagnosis. Seek qualified
+                medical care for severe, persistent,
+                unusual, or concerning symptoms.
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+</body>
+
+</html>

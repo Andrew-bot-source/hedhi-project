@@ -1,0 +1,76 @@
+<nav class="site-navbar">
+
+    <div class="nav-container">
+
+        <a href="{% url 'home' %}" class="brand">
+            🌸 Hedhi Tracker
+        </a>
+
+
+        <div class="nav-links">
+
+            {% if user.is_authenticated %}
+
+            <a href="{% url 'dashboard' %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'predict' %}">
+                Predict
+            </a>
+
+            <a href="{% url 'history' %}">
+                History
+            </a>
+
+            <a href="{% url 'symptoms' %}">
+                Symptoms
+            </a>
+
+            <a href="{% url 'profile' %}">
+                Profile
+            </a>
+
+
+            <form method="POST" action="{% url 'logout' %}" class="logout-form">
+                {% csrf_token %}
+
+                <button type="submit" class="nav-logout-btn">
+                    Logout
+                </button>
+            </form>
+
+            {% else %}
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}" class="nav-register-btn">
+                Create Account
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <button class="mobile-menu-btn" type="button" onclick="toggleMenu()">
+            ☰
+        </button>
+
+    </div>
+
+</nav>
+
+
+<script>
+    function toggleMenu() {
+        const links = document.querySelector(".nav-links");
+        links.classList.toggle("show");
+    }
+</script>

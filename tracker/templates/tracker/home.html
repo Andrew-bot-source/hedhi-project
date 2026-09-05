@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hedhi Cycle Tracker</title>
+    <link rel="stylesheet" href="{% static 'tracker/css/style.css' %}">
+</head>
+
+<body>
+    {% include "tracker/navbar.html" %}
+    <div class="home-page">
+        <form action="{% url 'predict' %}" method="POST">
+            {% csrf_token %}
+        </form>
+
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="logo">Hedhi Tracker</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#tips">Cycle Tips</a>
+                <a href="{% url 'predict' %}" class="nav-btn">Predict Cycle</a>
+            </div>
+        </nav>
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-tag">Smart Menstrual Cycle Tracking</span>
+                <h1>Understand Your Cycle. <span>Feel More Prepared.</span></h1>
+                <p>Track your menstrual cycle, estimate your next period, understand your fertile window, and stay
+                    prepared with personalized cycle insights.</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'predict' %}" class="primary-btn">Predict My Next Cycle</a>
+                    <a href="#how-it-works" class="secondary-btn">How It Works</a>
+                </div>
+                <div class="hero-stats">
+                    <div><strong>Cycle</strong><span>Prediction</span></div>
+                    <div><strong>Period</strong><span>Calendar</span></div>
+                    <div><strong>Smart</strong><span>Reminders</span></div>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="cycle-preview">
+                    <div class="preview-icon">🩸</div>
+                    <p>Next Period</p>
+                    <h2>Stay Prepared</h2>
+                    <span>Get an estimated next cycle date based on your cycle information.</span>
+                </div>
+                <div class="mini-cycle-card">
+                    <div><span>🌸</span>
+                        <p>Cycle Tracking</p>
+                    </div>
+                    <strong>Easy</strong>
+                </div>
+                <div class="mini-cycle-card">
+                    <div><span>🔔</span>
+                        <p>Reminders</p>
+                    </div>
+                    <strong>Helpful</strong>
+                </div>
+                <div class="mini-cycle-card">
+                    <div><span>💗</span>
+                        <p>Privacy First</p>
+                    </div>
+                    <strong>Important</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="features-section" id="features">
+            <div class="section-title">
+                <span>What you can do</span>
+                <h2>Everything you need to understand your cycle</h2>
+                <p>More than just predicting a date.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🩸</div>
+                    <h3>Period Prediction</h3>
+                    <p>Estimate the length of your next menstrual cycle using your cycle information.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Cycle Calendar</h3>
+                    <p>View your period days, predicted next period, and important cycle dates in one place.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌼</div>
+                    <h3>Fertile Window</h3>
+                    <p>View estimated fertile-window and ovulation dates as part of your cycle overview.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Smart Reminders</h3>
+                    <p>Receive reminders before your expected period and important cycle days.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Symptom Tracking</h3>
+                    <p>Keep track of mood, cramps, headaches, flow, sleep, and other symptoms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Cycle History</h3>
+                    <p>Review previous cycles and understand changes in your cycle over time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-section" id="how-it-works">
+            <div class="section-title">
+                <span>Simple Process</span>
+                <h2>How Hedhi Tracker Works</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Enter Your Information</h3>
+                    <p>Add your age, current cycle length, period duration, sleep, stress, BMI, and cycle type.</p>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Get Your Prediction</h3>
+                    <p>The trained machine-learning model estimates your next cycle length.</p>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>View Your Cycle</h3>
+                    <p>See estimated period dates, fertile-window dates, cycle day, and reminders.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HEALTH / CYCLE TIPS -->
+        <section class="tips-section" id="tips">
+            <div class="tips-content">
+                <span class="tips-label">Cycle Care</span>
+                <h2>Small habits can make cycle tracking easier</h2>
+                <p>Keeping consistent records can help you understand your own cycle patterns over time.</p>
+                <div class="tips-list">
+                    <div><span>💧</span> Stay hydrated</div>
+                    <div><span>😴</span> Track sleep</div>
+                    <div><span>🧘</span> Manage stress</div>
+                    <div><span>📝</span> Record symptoms</div>
+                    <div><span>🩸</span> Record actual period dates</div>
+                    <div><span>📊</span> Review cycle changes</div>
+                </div>
+            </div>
+            <div class="safety-card">
+                <span>💗</span>
+                <h3>Important Reminder</h3>
+                <p>Cycle predictions are estimates. Menstrual cycles can vary naturally, especially when cycles are
+                    irregular.</p>
+                <p>This website is designed for cycle awareness and tracking, not medical diagnosis.</p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div>
+                <h2>Ready to understand your next cycle?</h2>
+                <p>Enter your cycle information and get your personalized estimate.</p>
+            </div>
+            <a href="{% url 'predict' %}" class="cta-btn">Start Cycle Prediction →</a>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="home-footer">
+            <div>
+                <h3>Hedhi Cycle Tracker</h3>
+                <p>Smart cycle awareness made simple.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#tips">Cycle Care</a>
+                <a href="{% url 'predict' %}">Predict</a>
+            </div>
+            <p class="copyright">© 2026 Hedhi Cycle Tracker</p>
+        </footer>
+
+    </div>
+</body>
+
+</html>

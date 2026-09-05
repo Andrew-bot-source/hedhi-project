@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Hedhi</title>
+
+    <link rel="stylesheet" href="{% static 'tracker/css/style.css' %}">
+</head>
+
+<body>
+    {% include "tracker/navbar.html" %}
+    <div class="auth-page">
+
+        <div class="auth-card">
+
+            <div class="auth-icon">
+                🌸
+            </div>
+
+            <h1>Create Your Account</h1>
+
+            <p class="auth-subtitle">
+                Start tracking your cycle privately
+                and build your personal history.
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+
+                <div class="form-group">
+
+                    <label>
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+
+                    <small class="field-error">
+                        {{ error }}
+                    </small>
+
+                    {% endfor %}
+
+                </div>
+
+                {% endfor %}
+
+                <button class="predict-btn" type="submit">
+                    Create Account
+                </button>
+
+            </form>
+
+            <p class="auth-bottom">
+
+                Already have an account?
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

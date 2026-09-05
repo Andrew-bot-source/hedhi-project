@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Log Period | Hedhi</title>
+
+    <link rel="stylesheet" href="{% static 'tracker/css/style.css' %}">
+
+</head>
+
+<body>
+    {% include "tracker/navbar.html" %}
+    <div class="page-wrapper">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>🩸 Log Your Period</h1>
+
+                <p>
+                    Record the actual dates of your cycle.
+                </p>
+
+            </div>
+
+            <a href="{% url 'dashboard' %}" class="home-link">
+                ← Dashboard
+            </a>
+
+        </header>
+
+
+        <section class="card profile-card">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {% for field in form %}
+
+                <div class="form-group">
+
+                    <label>
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% for error in field.errors %}
+
+                    <small class="field-error">
+                        {{ error }}
+                    </small>
+
+                    {% endfor %}
+
+                </div>
+
+                {% endfor %}
+
+                <button class="predict-btn" type="submit">
+                    Save Period
+                </button>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</body>
+
+</html>
